@@ -1,0 +1,16 @@
+# YOLOv8 dataset configuration
+
+path: data/processed  # Dataset root
+train: images/train
+val: images/val
+test: images/test
+
+# Classes
+names:
+  0: rod
+  1: dividing
+  2: microcolony
+
+# Number of classes
+nc: 3
+
