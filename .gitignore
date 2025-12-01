@@ -5,6 +5,8 @@ data/augmented/
 *.png
 *.jpg
 *.jpeg
+DeepBacs_Dataset/
+CLAUDE.md
 
 # Model weights
 *.pt
