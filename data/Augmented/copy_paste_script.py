@@ -11,6 +11,17 @@ from segpaste.augmentation import CopyPasteAugmentation
 from segpaste.config import CopyPasteConfig
 from segpaste.types import DetectionTarget
 
+CLASS_TO_ID = {
+    "Rod": 0,
+    "Dividing": 1,
+    "Microcolony": 2
+}
+
+ID_TO_CLASS = {
+    0: "Rod",
+    1: "Dividing",
+    2: "Microcolony"
+}
 
 # Parse XML files
 
@@ -128,7 +139,7 @@ def df_to_detection_targets(df, image_root):
         boxes = group[["xmin", "ymin", "xmax", "ymax"]].values
         boxes_t = torch.tensor(boxes, dtype=torch.float32)
         # Extract labels
-        labels = group["class"].astype("category").cat.codes.values
+        labels = group["class"].map(CLASS_TO_ID).values
         labels_t = torch.tensor(labels, dtype=torch.int64)
         # Create masks from boxes
         masks_t = boxes_to_masks(boxes, H, W)
@@ -172,8 +183,8 @@ def run_copy_paste(train_df, image_root, output_dir, target_count=1000):
     os.makedirs(ann_out, exist_ok=True)
     
     # Build label mappings
-    class_names = train_df["class"].astype("category").cat.categories
-    id_to_name = {i: name for i, name in enumerate(class_names)}
+    class_names = list(CLASS_TO_ID.keys())
+    id_to_name = ID_TO_CLASS
     
     # Current class distribution
     class_counts = get_class_counts(train_df)
@@ -199,9 +210,10 @@ def run_copy_paste(train_df, image_root, output_dir, target_count=1000):
     # Configure copy paste augmentation
     config = CopyPasteConfig(
         paste_probability=1.0,
-        max_paste_objects=4,
-        min_paste_objects=2,
-        scale_range=(0.5, 1.8),
+        max_paste_objects=2,
+        min_paste_objects=1,
+        scale_range=(0.3, 1.1),
+        occluded_area_threshold = 0.1
     )
     cp = CopyPasteAugmentation(config)
         
@@ -221,9 +233,19 @@ def run_copy_paste(train_df, image_root, output_dir, target_count=1000):
             
             source_candidates = targets_by_class[most_needed_class]
             sources = []
-            for i in range(min(3, len(source_candidates))):
+            for i in range(min(2, len(source_candidates))):
                 src_idx = (idx + i + 1) % len(source_candidates)
-                sources.append(source_candidates[src_idx][1])
+                original = source_candidates[src_idx][1]
+                num_objects = min(2, len(original.labels))
+                perm = torch.randperm(len(original.labels))[:num_objects]
+
+                limited_source = DetectionTarget(
+                    image=original.image,
+                    boxes=original.boxes[perm],
+                    labels=original.labels[perm],
+                    masks=original.masks[perm]
+                )
+                sources.append(limited_source) 
         else:
             # Random selection otherwise
             idx = aug_counter % len(targets)
@@ -276,7 +298,7 @@ def run_copy_paste(train_df, image_root, output_dir, target_count=1000):
 def main():
     # Configuration
     CLASSES = ["Rod", "Dividing", "Microcolony"]
-    TARGET_COUNT = 1000
+    TARGET_COUNT = 800
     
     # Paths
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
