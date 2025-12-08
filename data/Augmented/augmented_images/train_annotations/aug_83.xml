@@ -77,21 +77,45 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>36</xmin>
-			<ymin>49</ymin>
-			<xmax>128</xmax>
-			<ymax>121</ymax>
+			<xmin>37</xmin>
+			<ymin>102</ymin>
+			<xmax>107</xmax>
+			<ymax>134</ymax>
 		</bndbox>
 	</object>
 	<object>
-		<name>Dividing</name>
+		<name>Microcolony</name>
 		<pose>Unspecified</pose>
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>197</xmin>
-			<ymin>107</ymin>
-			<xmax>235</xmax>
+			<xmin>20</xmin>
+			<ymin>102</ymin>
+			<xmax>68</xmax>
+			<ymax>130</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>Rod</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>183</xmin>
+			<ymin>86</ymin>
+			<xmax>195</xmax>
+			<ymax>113</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>Microcolony</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>26</xmin>
+			<ymin>62</ymin>
+			<xmax>160</xmax>
 			<ymax>122</ymax>
 		</bndbox>
 	</object>

@@ -115,8 +115,32 @@
 		<bndbox>
 			<xmin>157</xmin>
 			<ymin>16</ymin>
-			<xmax>178</xmax>
+			<xmax>177</xmax>
 			<ymax>34</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>Rod</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>106</xmin>
+			<ymin>5</ymin>
+			<xmax>135</xmax>
+			<ymax>23</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>Dividing</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>99</xmin>
+			<ymin>1</ymin>
+			<xmax>128</xmax>
+			<ymax>18</ymax>
 		</bndbox>
 	</object>
 	<object>
@@ -161,10 +185,10 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>26</xmin>
-			<ymin>92</ymin>
-			<xmax>56</xmax>
-			<ymax>110</ymax>
+			<xmin>66</xmin>
+			<ymin>218</ymin>
+			<xmax>98</xmax>
+			<ymax>228</ymax>
 		</bndbox>
 	</object>
 	<object>
@@ -173,34 +197,10 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>185</xmin>
-			<ymin>13</ymin>
-			<xmax>249</xmax>
-			<ymax>45</ymax>
-		</bndbox>
-	</object>
-	<object>
-		<name>Dividing</name>
-		<pose>Unspecified</pose>
-		<truncated>0</truncated>
-		<difficult>0</difficult>
-		<bndbox>
-			<xmin>125</xmin>
-			<ymin>4</ymin>
-			<xmax>162</xmax>
-			<ymax>23</ymax>
-		</bndbox>
-	</object>
-	<object>
-		<name>Dividing</name>
-		<pose>Unspecified</pose>
-		<truncated>0</truncated>
-		<difficult>0</difficult>
-		<bndbox>
-			<xmin>165</xmin>
-			<ymin>138</ymin>
-			<xmax>196</xmax>
-			<ymax>155</ymax>
+			<xmin>178</xmin>
+			<ymin>5</ymin>
+			<xmax>235</xmax>
+			<ymax>56</ymax>
 		</bndbox>
 	</object>
 </annotation>
