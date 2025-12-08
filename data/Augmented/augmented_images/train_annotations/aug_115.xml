@@ -180,15 +180,15 @@
 		</bndbox>
 	</object>
 	<object>
-		<name>Rod</name>
+		<name>Microcolony</name>
 		<pose>Unspecified</pose>
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>214</xmin>
-			<ymin>170</ymin>
-			<xmax>244</xmax>
-			<ymax>189</ymax>
+			<xmin>26</xmin>
+			<ymin>105</ymin>
+			<xmax>60</xmax>
+			<ymax>174</ymax>
 		</bndbox>
 	</object>
 	<object>
@@ -197,10 +197,34 @@
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>67</xmin>
-			<ymin>190</ymin>
-			<xmax>105</xmax>
-			<ymax>201</ymax>
+			<xmin>220</xmin>
+			<ymin>116</ymin>
+			<xmax>243</xmax>
+			<ymax>228</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>Microcolony</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>152</xmin>
+			<ymin>106</ymin>
+			<xmax>185</xmax>
+			<ymax>159</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>Microcolony</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>46</xmin>
+			<ymin>181</ymin>
+			<xmax>102</xmax>
+			<ymax>231</ymax>
 		</bndbox>
 	</object>
 </annotation>
