@@ -168,27 +168,27 @@
 		</bndbox>
 	</object>
 	<object>
-		<name>Dividing</name>
+		<name>Microcolony</name>
 		<pose>Unspecified</pose>
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>96</xmin>
-			<ymin>101</ymin>
+			<xmin>58</xmin>
+			<ymin>87</ymin>
 			<xmax>135</xmax>
-			<ymax>121</ymax>
+			<ymax>113</ymax>
 		</bndbox>
 	</object>
 	<object>
-		<name>Rod</name>
+		<name>Microcolony</name>
 		<pose>Unspecified</pose>
 		<truncated>0</truncated>
 		<difficult>0</difficult>
 		<bndbox>
-			<xmin>205</xmin>
-			<ymin>137</ymin>
-			<xmax>227</xmax>
-			<ymax>162</ymax>
+			<xmin>95</xmin>
+			<ymin>43</ymin>
+			<xmax>159</xmax>
+			<ymax>75</ymax>
 		</bndbox>
 	</object>
 </annotation>

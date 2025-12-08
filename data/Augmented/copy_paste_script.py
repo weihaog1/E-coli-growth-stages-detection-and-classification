@@ -33,7 +33,7 @@ def xml_to_df(path):
     for xml_file in glob.glob(path + '/*.xml'):
         tree = ET.parse(xml_file)
         root = tree.getroot()
-        # Each object has a bounding box
+        # Each object is a bounding box
         for member in root.findall('object'):
             value = (root.find('filename').text,               # image filename
                     int(root.find('size')[0].text),           # image width
@@ -119,7 +119,7 @@ def boxes_to_masks(boxes, height, width):
 
 def df_to_detection_targets(df, image_root):
     """
-    Convert DataFrame annotations to DetectionTarget objects for segpaste
+    Convert DataFrame annotations to DetectionTarget objects for segpaste.
     """
     targets = []
     grouped = df.groupby("filename")
@@ -153,61 +153,6 @@ def df_to_detection_targets(df, image_root):
         targets.append(target)
 
     return targets
-
-def augment_single_object(source):
-    """
-    Apply augmentation to a single object crop.
-    Expects source DetectionTarget to contain exactly one object.
-    """
-    box = source.boxes[0]
-    label = source.labels[0]
-    mask = source.masks[0]
-    x1, y1, x2, y2 = box.int().tolist()
-
-    # Crop
-    obj_img = source.image[:, y1:y2, x1:x2]
-    obj_mask = mask[y1:y2, x1:x2]
-    obj_img_np = (obj_img.permute(1, 2, 0).numpy() * 255).astype(np.uint8)
-    obj_mask_np = obj_mask.numpy().astype(np.uint8)
-    
-    # Augmentations 
-    if np.random.rand() < 0.8:
-        k = np.random.randint(1, 4)
-        obj_img_np = np.rot90(obj_img_np, k)
-        obj_mask_np = np.rot90(obj_mask_np, k)
-
-    if np.random.rand() < 0.8:
-        obj_img_np = np.fliplr(obj_img_np)
-        obj_mask_np = np.fliplr(obj_mask_np)
-
-    scale = np.random.uniform(0.7, 1.3)
-    new_h = int(obj_img_np.shape[0] * scale)
-    new_w = int(obj_img_np.shape[1] * scale)
-    obj_img_np = cv2.resize(obj_img_np, (new_w, new_h))
-    obj_mask_np = cv2.resize(obj_mask_np, (new_w, new_h), interpolation=cv2.INTER_NEAREST)
-
-    max_area = 8100  # pixel area limit
-
-    current_area = new_w * new_h
-    if current_area > max_area:
-        shrink_factor = (max_area / current_area) ** 0.5  # sqrt keeps aspect ratio
-        new_w = max(1, int(new_w * shrink_factor))
-        new_h = max(1, int(new_h * shrink_factor))
-        obj_img_np = cv2.resize(obj_img_np, (new_w, new_h))
-        obj_mask_np = cv2.resize(obj_mask_np, (new_w, new_h),
-                                interpolation=cv2.INTER_NEAREST)
-    # Back to torch
-    new_img = torch.tensor(obj_img_np / 255.0, dtype=torch.float32).permute(2, 0, 1)
-    new_mask = torch.tensor(obj_mask_np, dtype=torch.uint8)
-    new_box = torch.tensor([0, 0, new_w, new_h], dtype=torch.float32)
-
-    return DetectionTarget(
-        image=new_img,
-        boxes=new_box.unsqueeze(0),
-        labels=label.unsqueeze(0),
-        masks=new_mask.unsqueeze(0)
-    )
-
 
 def get_class_counts(df):
     """
@@ -264,9 +209,9 @@ def run_copy_paste(train_df, image_root, output_dir, target_count=1000):
     
     # Configure copy paste augmentation
     config = CopyPasteConfig(
-        paste_probability=1.0,  # Every image pasted
-        max_paste_objects=4,    # 2-4 sources
-        min_paste_objects=2,
+        paste_probability=1.0,
+        max_paste_objects=2,
+        min_paste_objects=1,
         scale_range=(0.3, 1.1),
         occluded_area_threshold = 0.1
     )
@@ -288,27 +233,19 @@ def run_copy_paste(train_df, image_root, output_dir, target_count=1000):
             
             source_candidates = targets_by_class[most_needed_class]
             sources = []
-            for i in range(min(4, len(source_candidates))):
+            for i in range(min(2, len(source_candidates))):
                 src_idx = (idx + i + 1) % len(source_candidates)
                 original = source_candidates[src_idx][1]
                 num_objects = min(2, len(original.labels))
                 perm = torch.randperm(len(original.labels))[:num_objects]
+
                 limited_source = DetectionTarget(
                     image=original.image,
                     boxes=original.boxes[perm],
                     labels=original.labels[perm],
                     masks=original.masks[perm]
                 )
-                # Limit to 1 object copied per source
-                for j in range(len(limited_source.boxes)):
-                    single = DetectionTarget(
-                        image=original.image,
-                        boxes=limited_source.boxes[j:j+1],
-                        labels=limited_source.labels[j:j+1],
-                        masks=limited_source.masks[j:j+1]
-                    )
-                    single = augment_single_object(single)
-                    sources.append(single)
+                sources.append(limited_source) 
         else:
             # Random selection otherwise
             idx = aug_counter % len(targets)
