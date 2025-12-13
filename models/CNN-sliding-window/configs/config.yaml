@@ -1,0 +1,51 @@
+# ============================================
+# CNN Sliding Window - Config
+# ============================================
+
+# Paths (relative to models/CNN-sliding-window/)
+paths:
+  # Source dataset (DeepBacs) - relative to repo root
+  raw_data: "../../data/raw/image_patches"
+  processed_data: "../../data/cnn_patches"
+  weights: "weights"
+  logs: "logs"
+
+# Dataset
+dataset:
+  img_size: 256
+  num_classes: 4  # rod, dividing, microcolony, background
+  classes:
+    0: "rod"
+    1: "dividing"
+    2: "microcolony"
+    3: "background"
+  split:
+    train: 0.8
+    val: 0.2
+
+# Augmentation
+augmentation:
+  enabled: true
+  geometric:
+    rotation: 45
+    horizontal_flip: true
+    vertical_flip: true
+  pixel:
+    brightness_limit: 0.2
+    contrast_limit: 0.2
+    noise: true
+
+# Training - Custom CNN
+cnn:
+  batch_size: 32
+  epochs: 100
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  optimizer: "adam"
+  scheduler: "cosine"
+  patch_size: 64  # For sliding window
+  stride: 32
+  nms_threshold: 0.5
+
+# Reproducibility
+seed: 42

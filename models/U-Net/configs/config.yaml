@@ -1,0 +1,54 @@
+# ============================================
+# U-Net Segmentation - Config
+# ============================================
+
+# Paths (relative to models/U-Net/)
+paths:
+  raw_data: "../../data/raw/image_patches"
+  augmented_data: "../../data/Augmented/augmented_images"
+  unet_original: "../../data/unet_original"
+  unet_augmented: "../../data/unet_augmented"
+  weights: "weights"
+  results: "results"
+
+# Dataset
+dataset:
+  img_size: 256
+  num_classes: 4
+  classes:
+    0: "background"
+    1: "rod"
+    2: "dividing"
+    3: "microcolony"
+  val_split: 0.2
+
+# Model
+model:
+  architecture: "unet_small"  # or "unet" for full size
+  n_channels: 1
+  n_classes: 4
+  bilinear: true
+
+# Training
+training:
+  batch_size: 8
+  epochs: 100
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  optimizer: "adam"
+  scheduler: "reduce_on_plateau"
+  scheduler_patience: 10
+  scheduler_factor: 0.5
+
+# Augmentation
+augmentation:
+  horizontal_flip: true
+  vertical_flip: true
+  rotation: 45
+  shift_scale_rotate: true
+  gaussian_blur: true
+  brightness_contrast: true
+  gaussian_noise: true
+
+# Reproducibility
+seed: 42
