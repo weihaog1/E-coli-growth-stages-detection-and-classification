@@ -86,7 +86,7 @@ Fine-tuned YOLOv8 for bacterial detection.
 |-------|---------------|------------|
 | CNN Sliding Window | F1: 82.77% | ~254K |
 | U-Net | mIoU: 40.13% | ~31M |
-| YOLOv8n | mAP@50: 95.4% | ~11M |
+| YOLOv8n | mAP@50: 95.2% | ~11M |
 
 ## Team
 
