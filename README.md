@@ -76,7 +76,7 @@ Fine-tuned YOLOv8 for bacterial detection.
 **Run the Jupyter notebooks in `models/YOLOv8/`:**
 
 1. `convert_txt.ipynb` - Convert annotations to YOLO format
-2. `yolov8.ipynb` - Train and evaluate YOLOv8
+2. `yolov8_train.ipynb` - Train and evaluate YOLOv8
 
 **Results:** Best mAP@50: 0.954
 
