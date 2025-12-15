@@ -1,0 +1,6 @@
+path: YOLOv8_data/augment_dataset3
+train: images/train
+val: images/test
+
+nc: 3
+names: ['Rod', 'Dividing', 'Microcolony']

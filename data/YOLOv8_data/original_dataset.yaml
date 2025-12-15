@@ -1,0 +1,6 @@
+path: YOLOv8_data/original_dataset
+train: images/train
+val: images/test
+
+nc: 3
+names: ['Rod', 'Dividing', 'Microcolony']
